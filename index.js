@@ -34,11 +34,12 @@ PanasonicTV.prototype.getOn = function(callback) {
 
 PanasonicTV.prototype.setOn = function(on, callback) {
 
-var url = "/nrc/control_0";
-var action = "X_SendKey" ;
-var command = "<X_KeyEvent>NRC_POWER-ONOFF</X_KeyEvent>";
+	var url = "/nrc/control_0";
+	var urn = "panasonic-com:service:p00NetworkControl:1";
+	var action = "X_SendKey" ;
+	var command = "<X_KeyEvent>NRC_POWER-ONOFF</X_KeyEvent>";
 
-var body = "<?xml version='1.0' encoding='utf-8'?> \
+	var body = "<?xml version='1.0' encoding='utf-8'?> \
 	   <s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'> \
 	    <s:Body> \
 	     <u:"+action+" xmlns:u='urn:"+urn+"'> \
@@ -59,20 +60,19 @@ var body = "<?xml version='1.0' encoding='utf-8'?> \
 	    }
 	 };
 
-  var req = http.request(postRequest, function(res) {
+	var req = http.request(postRequest, function(res) {
 	    res.setEncoding('utf8');
 	    res.on('data', self.callback);
 	  });
 
 
   if(on){
-    
-	  req.write(body);
-	  req.end();
-	};
-    
+  	
+  	req.write(body);
+	req.end();
   } else {
-    
+    	req.write(body);
+	req.end();
   }
   callback();
 }
