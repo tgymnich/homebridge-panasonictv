@@ -35,9 +35,8 @@ PanasonicTV.prototype.getOn = function(callback) {
 PanasonicTV.prototype.setOn = function(on, callback) {
 
 var url = "/nrc/control_0";
-
-var action = ;
-var command = ;
+var action = "X_SendKey" ;
+var command = "<X_KeyEvent>NRC_POWER-ONOFF</X_KeyEvent>";
 
 var body = "<?xml version='1.0' encoding='utf-8'?> \
 	   <s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'> \
