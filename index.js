@@ -1,4 +1,4 @@
-var Service, Characteristic;
+svar Service, Characteristic;
 var http = require('http');
 
 module.exports = function(homebridge) {
