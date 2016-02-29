@@ -1,12 +1,13 @@
-# homebridge-vsx
+# homebridge-panasonictv
 
-homebrdige-vsx is a plugin made homebrige, wich allows switching on and off your Pioneer AV Reciever. All AV Recievers, wich work with the iControl AV5 App are supported.
+
 
 # Installation
 
+Does not work yet!
 
 1. Install homebridge using: npm install -g homebridge
-2. Install this plugin using: npm install -g homebridge-vsx
+2. Install this plugin using: npm install -g homebridge-panasonictv
 3. Update your configuration file. See sample-config.json in this repository for a sample. 
 
 # Configuration
