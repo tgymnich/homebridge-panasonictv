@@ -1,10 +1,9 @@
 # homebridge-panasonictv
 
+A homebridge Plugin for turning on and off your Panasonic TV
 
 
 # Installation
-
-Does not work yet!
 
 1. Install homebridge using: npm install -g homebridge
 2. Install this plugin using: npm install -g homebridge-panasonictv
@@ -26,7 +25,3 @@ Configuration sample:
     ]
 ```
 
-# To Do:
-
-1. Volume control
-2. Channel control
