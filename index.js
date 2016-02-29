@@ -62,12 +62,11 @@ PanasonicTV.prototype.setOn = function(on, callback) {
 
 	var req = http.request(postRequest, function(res) {
 	    res.setEncoding('utf8');
-	    res.on('data', self.callback);
+	    res.on('data', this.callback);
 	  });
 
 
   if(on){
-  	
   	req.write(body);
 	req.end();
   } else {
