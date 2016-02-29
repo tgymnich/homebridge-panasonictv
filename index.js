@@ -16,19 +16,16 @@ function PanasonicTV(log, config) {
 
   this.service = new Service.Switch(this.name);
   this.service.getCharacteristic(Characteristic.On)
-    .on("set", this.setOn.bind(this))
-    .on("get", this.getOn.bind(this));
+    .on("set", this.setOn.bind(this)); //remove ;
+  //  .on("get", this.getOn.bind(this));
 }
 
 PanasonicTV.prototype.getServices = function() {
   return [this.service];
 }
 
-PanasonicTV.prototype.getOn = function(callback) {
-  
-  //WIP
-  
-}
+//PanasonicTV.prototype.getOn = function(callback) {
+//}
 
 
 
