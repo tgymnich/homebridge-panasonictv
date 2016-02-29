@@ -49,7 +49,7 @@ PanasonicTV.prototype.setOn = function(on, callback) {
 	   </s:Envelope>";
 	   
 	 var postRequest = {
-	    host: ip,
+	    host: "192.168.178.48",
 	    path: url,
 	    port: 55000,
 	    method: "POST",
