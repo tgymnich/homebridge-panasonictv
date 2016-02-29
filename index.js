@@ -12,7 +12,6 @@ function PanasonicTV(log, config) {
   this.log = log;
   this.name = config.name;
   this.HOST = config.ip;
-  this.PORT = 23;
 
   this.service = new Service.Switch(this.name);
   this.service.getCharacteristic(Characteristic.On)
@@ -46,7 +45,7 @@ PanasonicTV.prototype.setOn = function(on, callback) {
 	   </s:Envelope>";
 	   
 	 var postRequest = {
-	    host: "192.168.178.48",
+	    host: this.HOST,
 	    path: url,
 	    port: 55000,
 	    method: "POST",
