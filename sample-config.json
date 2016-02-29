@@ -12,9 +12,9 @@
 
     "accessories": [
         {
-            "accessory": "VSX",
-            "name": "Pioneer VSX-921",
-            "description": "My Reciever",
+            "accessory": "TV",
+            "name": "TV",
+            "description": "Livingroom tv",
             "ip": "192.168.178.20"
         }
     ]
