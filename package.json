@@ -1,0 +1,24 @@
+{
+  "name": "homebridge-vsx",
+  "version": "1.0.2",
+  "description": "Pioneer-VSX plugin for homebridge: https://github.com/nfarina/homebridge",
+  "license": "ISC",
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.0"
+  },
+  "author": {
+    "name": "TG908"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TG908/homebridge-vsx.git"
+  },
+  "dependencies": {
+    "request": "^2.65.0",
+    "net" : ""
+  }
+}

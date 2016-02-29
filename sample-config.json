@@ -1,0 +1,21 @@
+{
+    "bridge": {
+        "name": "HomebridgePI",
+        "username": "CD:22:3D:E3:CE:30",
+        "port": 51826,
+        "pin": "031-45-156"
+    },
+    
+    "description": "Hello World",
+
+    "platforms": [],
+
+    "accessories": [
+        {
+            "accessory": "VSX",
+            "name": "Pioneer VSX-921",
+            "description": "My Reciever",
+            "ip": "192.168.178.20"
+        }
+    ]
+}
