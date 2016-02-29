@@ -17,9 +17,9 @@ Configuration sample:
  ```
 "accessories": [
         {
-            "accessory": "VSX",
-            "name": "VSX-921",
-            "description": "Reciever",
+            "accessory": "TV",
+            "name": "TV",
+            "description": "Livingroom tv",
             "ip": "192.168.178.20"
         }
 
