@@ -62,6 +62,10 @@ PanasonicTV.prototype.setOn = function(on, callback) {
 		console.log("request sent"); 	
 	    });
 	  });
+	  
+	  req.on('error', function(e) {
+	     console.log('ERROR: ' + e);
+	  });
 
 
   if(on){
