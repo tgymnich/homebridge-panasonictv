@@ -25,31 +25,23 @@ PanasonicTV.prototype.getServices = function() {
 
 PanasonicTV.prototype.getOn = function(callback) {
 
-	var options = {
+	var getRequest = {
 	 host: this.HOST,
 	  port: 550000,
 	  path: '/'
 	};
 
-	http.get(options, function(res) {
+	http.get(getRequest, function(res) {
 	  if (res.statusCode == 200) {
 	    console.log("success");
+	    var on = true;
+	    callback(null, on);
 	 }
 	}).on('error', function(e) {
 	  console.log("Got error: " + e.message);
+	  var on = false;
+	  callback(null, on);
 	});
-
-	function testPort(port, host, cb) {
-	  http.get({
-	  host: host, 
-	   port: port 
-	 }, function(res) {
-	    cb("success", res); 
-	  }).on("error", function(e) {
-	    cb("failure", e);
-	  });
-	}
-testPort(55000, this.HOST, x)
 }
 
 
