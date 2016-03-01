@@ -31,7 +31,7 @@ PanasonicTV.prototype.getOn = function(callback) {
 	  path: '/'
 	};
 
-	http.get(getRequest, function(res) {
+	var req = http.get(getRequest, function(res) {
 	  if (res.statusCode == 200) {
 	    console.log("success");
 	    var on = true;
@@ -42,6 +42,8 @@ PanasonicTV.prototype.getOn = function(callback) {
 	  var on = false;
 	  callback(null, on);
 	});
+	
+	req.end();
 }
 
 
