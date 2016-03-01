@@ -34,6 +34,7 @@ PanasonicTV.prototype.getOn = function(callback) {
 
 	var req = http.get(getRequest, function(res) {
 		console.log("get");
+		console.log(res.statusCode)
 		res.setEncoding('utf8');
 		 if (res.statusCode == 200) {
 	    		console.log("success");
