@@ -38,6 +38,7 @@ PanasonicTV.prototype.getOn = function(callback) {
 			var on = true;
 	    		callback(null, on);
 	 }
+	});
 		
 	req.on('error', function(e) {
 	  console.log("Got error: " + e.message);
