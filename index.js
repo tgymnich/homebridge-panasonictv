@@ -27,7 +27,7 @@ PanasonicTV.prototype.getOn = function(callback) {
 
 	var getRequest = {
 	 host: this.HOST,
-	  port: 550000,
+	  port: 55000,
 	  path: '/'
 	};
 
