@@ -32,12 +32,14 @@ PanasonicTV.prototype.getOn = function(callback) {
 	};
 
 	var req = http.get(getRequest, function(res) {
-	  if (res.statusCode == 200) {
-	    console.log("success");
-	    var on = true;
-	    callback(null, on);
+		res.setEncoding('utf8');
+		 if (res.statusCode == 200) {
+	    		console.log("success");
+			var on = true;
+	    		callback(null, on);
 	 }
-	}).on('error', function(e) {
+		
+	req.on('error', function(e) {
 	  console.log("Got error: " + e.message);
 	  var on = false;
 	  callback(null, on);
@@ -76,7 +78,7 @@ PanasonicTV.prototype.setOn = function(on, callback) {
 	    }
 	 };
 
-	var req = http.request(postRequest, function(res) {
+	var req = http.u(postRequest, function(res) {
 	    res.setEncoding('utf8');
 	    res.on('data', function(chunk){
 		console.log("request sent"); 	
