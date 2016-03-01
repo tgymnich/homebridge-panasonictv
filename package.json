@@ -1,6 +1,6 @@
 {
   "name": "homebridge-panasonictv",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Panasonic TV plugin for homebridge: https://github.com/nfarina/homebridge",
   "license": "ISC",
   "keywords": [
