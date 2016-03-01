@@ -28,10 +28,12 @@ PanasonicTV.prototype.getOn = function(callback) {
 	var getRequest = {
 	 host: this.HOST,
 	  port: 55000,
-	  path: '/'
+	  path: '/',
+	  method: 'GET'
 	};
 
 	var req = http.get(getRequest, function(res) {
+		console.log("get");
 		res.setEncoding('utf8');
 		 if (res.statusCode == 200) {
 	    		console.log("success");
