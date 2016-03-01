@@ -26,9 +26,9 @@ PanasonicTV.prototype.getServices = function() {
 PanasonicTV.prototype.getOn = function(callback) {
 
 	var options = {
-	 host: 'www.google.com',
-	  port: 80,
-	  path: '/index.html'
+	 host: this.HOST,
+	  port: 550000,
+	  path: '/'
 	};
 
 	http.get(options, function(res) {
