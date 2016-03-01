@@ -78,7 +78,7 @@ PanasonicTV.prototype.setOn = function(on, callback) {
 	    }
 	 };
 
-	var req = http.u(postRequest, function(res) {
+	var req = http.request(postRequest, function(res) {
 	    res.setEncoding('utf8');
 	    res.on('data', function(chunk){
 		console.log("request sent"); 	
