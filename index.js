@@ -36,7 +36,7 @@ PanasonicTV.prototype.getOn = function(callback) {
 		console.log("get");
 		console.log(res.statusCode)
 		res.setEncoding('utf8');
-		 if (res.statusCode == 200) {
+		 if (res.statusCode == 200) {  //repsonse is 403 Forbidden
 	    		console.log("success");
 			var on = true;
 	    		callback(null, on);
