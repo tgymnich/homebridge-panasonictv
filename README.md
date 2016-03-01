@@ -24,4 +24,7 @@ Configuration sample:
 
     ]
 ```
+#To Do
+
+1. Get the on/off status of the TV
 
