@@ -15,16 +15,42 @@ function PanasonicTV(log, config) {
 
   this.service = new Service.Switch(this.name);
   this.service.getCharacteristic(Characteristic.On)
-    .on("set", this.setOn.bind(this)); //remove ;
-  //  .on("get", this.getOn.bind(this));
+    .on("set", this.setOn.bind(this))
+    .on("get", this.getOn.bind(this));
 }
 
 PanasonicTV.prototype.getServices = function() {
   return [this.service];
 }
 
-//PanasonicTV.prototype.getOn = function(callback) {
-//}
+PanasonicTV.prototype.getOn = function(callback) {
+
+	var options = {
+	 host: 'www.google.com',
+	  port: 80,
+	  path: '/index.html'
+	};
+
+	http.get(options, function(res) {
+	  if (res.statusCode == 200) {
+	    console.log("success");
+	 }
+	}).on('error', function(e) {
+	  console.log("Got error: " + e.message);
+	});
+
+	function testPort(port, host, cb) {
+	  http.get({
+	  host: host, 
+	   port: port 
+	 }, function(res) {
+	    cb("success", res); 
+	  }).on("error", function(e) {
+	    cb("failure", e);
+	  });
+	}
+testPort(55000, this.HOST, x)
+}
 
 
 
