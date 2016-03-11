@@ -2,7 +2,6 @@
 
 A homebridge Plugin for turning on and off your Panasonic TV
 
-
 # Installation
 
 1. Install homebridge using: npm install -g homebridge
@@ -19,12 +18,10 @@ Configuration sample:
             "accessory": "TV",
             "name": "TV",
             "description": "Livingroom tv",
-            "ip": "192.168.178.20"
+            "ip": "192.168.178.20",
+            "maxVolume": 15
         }
 
     ]
 ```
-#To Do
-
-1. Get the on/off status of the TV
 

@@ -18,7 +18,8 @@
     "url": "git://github.com/TG908/homebridge-panasonictv.git"
   },
   "dependencies": {
-    "request": "^2.65.0",
-    "http" : ""
+    "http": "",
+    "panasonic-viera-control": "0.0.1",
+    "request": "^2.65.0"
   }
 }
