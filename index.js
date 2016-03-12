@@ -1,5 +1,6 @@
 var inherits = require('util').inherits;
 var PanasonicViera = require('./node_modules/panasonic-viera-control/panasonicviera.js');
+var http = require('http');
 var Service, Characteristic, VolumeCharacteristic;
 
 module.exports = function(homebridge) {
@@ -40,32 +41,160 @@ PanasonicTV.prototype.getServices = function() {
 }
 
 PanasonicTV.prototype.getOn = function(callback) {
-  // Temporary default to TRUE
-  callback(null, true);
+
+  console.log("==========================");
+  console.log("getOn");
+
+  var self = this;
+  self.getOnCallback = callback;
+
+  this.getPowerState(this.HOST, function(state) {
+    console.log("getOn :: Got powerstate: " + state);
+    self.getOnCallback(null,state == 1);
+  });
 }
 
 PanasonicTV.prototype.setOn = function(on, callback) {
 
-  if(on) {
-    callback(new Error("This plugin cannot power the TV on, sadly."));
-  }
-  else {
-    this.tv.send(PanasonicViera.POWER_TOGGLE);
-    callback();
-  }
+  console.log("==========================");
+  console.log("setOn: " + on);
+
+  var self = this;
+  self.setOnCallback = callback;
+
+  this.getPowerState(this.HOST, function(state) {
+    console.log("setOn :: Got powerstate: " + state);
+
+    if (state == -1 && on) {
+      self.tv.send(PanasonicViera.POWER_TOGGLE);
+      self.setOnCallback(null, true);
+    }
+    else if (state == 0 && on) {
+      self.setOnCallback(new Error("The TV is *really* off and cannot be woken up."));
+    }
+    else if (state == 1 && !on) {
+     self.tv.send(PanasonicViera.POWER_TOGGLE); 
+      self.setOnCallback(null, false);
+    }
+    else {
+     self.setOnCallback(new Error("Cannot fullfill " + (on ? "ON" : "OFF") + " request. Powerstate == " + state)); 
+    }
+  })
 }
 
 PanasonicTV.prototype.getVolume = function(callback) {
-  this.tv.getVolume(function (data) {
-    var v = (data / this.maxVolume) * 100;
-    callback(null, v);
+
+  console.log("==========================");
+  console.log("getVolume");
+
+  var self = this;
+  self.volumeCallback = callback;
+
+  this.getPowerState(this.HOST, function(state) {
+    console.log("getVolume :: Got powerstate: " + state);
+
+      if (state == 1) {
+        self.tv.getVolume(function (data) {
+          console.log("volume: " + data);
+          var translatedVolume = (data / self.maxVolume) * 100;
+          console.log("translatedVolume: " + translatedVolume);
+          self.volumeCallback(null, translatedVolume);
+        });
+      }
+      else {
+        self.volumeCallback(null, 0);
+      }
   });
 }
 
 PanasonicTV.prototype.setVolume = function(volume, callback) {
-  var v = (volume / 100) * this.maxVolume;
-  this.tv.setVolume(v);
+  // Here we don't care about the TV's powerstate. If it's off, then all calls time out or error.. 
+  var translatedVolume = (volume / 100) * this.maxVolume;
+  this.tv.setVolume(translatedVolume);
   callback();
+}
+
+// Returns:
+// -1 when the TV is in standby-mode (a 400-Bad Request is returned by the TV)
+//  0 when the TV is off, or it's a TV that does not support the standby wake-up request(the request errors)
+//  1 when the TV is on (a normal 200 response is returned) 
+PanasonicTV.prototype.getPowerState = function(ipAddress, stateCallback) {
+
+  var path = "/dmr/control_0";
+  var body = '<?xml version="1.0" encoding="utf-8"?>\n' +
+             '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">\n' +
+             ' <s:Body>\n' +
+             '  <u:getVolume xmlns:u="urn:schemas-upnp-org:service:RenderingControl:1">\n' +
+             '   <InstanceID>0</InstanceID><Channel>Master</Channel>\n' +
+             '  </u:getVolume>\n' +
+             ' </s:Body>\n' +
+             '</s:Envelope>\n';
+
+  var post_options = {
+    host: ipAddress,
+    port: '55000',
+    path: path,
+    method: 'POST',
+    headers: {
+      'Content-Length': body.length,
+      'Content-Type': 'text/xml; charset="utf-8"',
+      'User-Agent': 'net.thlabs.nodecontrol',
+      'SOAPACTION': '"urn:schemas-upnp-org:service:RenderingControl:1#getVolume"'
+    }
+  }
+
+  // The request intermittently TIMES OUT, ERRORS, OR BOTH(!) when the TV is not
+  // available. Therefore we're maintaining state whether the callback is called
+  // since you're only allowed to call the Homekit-callback once.
+  var calledBack = false;
+
+  var req = http.request(post_options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function(data) {
+      // do nothing here, but without attaching a 'data' event, the 'end' event is not called
+    });
+    res.on('end', function() {
+      console.log("request ended");
+      console.log(res.statusCode);
+      if(res.statusCode == 200) {
+        if (!calledBack) {
+          stateCallback(1);
+        }
+      }
+      else {
+        if (!calledBack) {
+          stateCallback(-1);
+        }
+      }
+    });
+  });
+ 
+ req.on('error', function(e) {
+    console.log('errored');
+    console.log(e);
+    if (!calledBack) {
+      stateCallback(0);
+      calledBack = true;
+    }
+    else {
+      console.log ("already called callback");
+    }
+  });
+  req.on('timeout', function() {
+    console.log('timed out');
+    if (!calledBack) {
+      stateCallback(0);
+      calledBack = true;
+    }
+    else {
+      console.log ("already called callback");
+    }
+  });
+
+  req.setTimeout(2000);
+
+  req.write(body);
+  req.end();
 }
 
 function makeVolumeCharacteristic() {

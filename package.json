@@ -13,9 +13,11 @@
   "author": {
     "name": "TG908"
   },
-  "contributors": [{
-    "name": "fguchelaar"
-  }],
+  "contributors": [
+    {
+      "name": "fguchelaar"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/TG908/homebridge-panasonictv.git"
