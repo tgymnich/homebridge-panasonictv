@@ -9,6 +9,15 @@ A homebridge Plugin for turning on and off your Panasonic TV
 2. Install this plugin using: npm install -g homebridge-panasonictv
 3. Update your configuration file. See sample-config.json in this repository for a sample. 
 
+# Compatible TVs:
+
+In my experience not every TV can be turned on, when it is off
+
+The following models are confirmed to work:
+
+
+
+
 # Configuration
 
 Configuration sample:
