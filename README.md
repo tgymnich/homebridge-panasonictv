@@ -18,6 +18,7 @@ The following models are confirmed to work:
 1. TX-50CX700B
 
 If your TV does not support turning it on over this plugin you might want to consider using this pluign:
+https://github.com/fguchelaar/homebridge-panasonictv
 
 
 # Configuration
