@@ -1,15 +1,16 @@
 var inherits = require('util').inherits;
 var PanasonicViera = require('./node_modules/panasonic-viera-control/panasonicviera.js');
 var http = require('http');
-var Service, Characteristic, VolumeCharacteristic;
+var Service, Characteristic, VolumeCharacteristic, ChannelCharacteristic;
 
 module.exports = function(homebridge) {
 
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
-  
+
   // we can only do this after we receive the homebridge API object
   makeVolumeCharacteristic();
+  makeChannelCharacteristic();
 
   homebridge.registerAccessory("homebridge-panasonictv", "TV", PanasonicTV);
 }
@@ -31,6 +32,11 @@ function PanasonicTV(log, config) {
     .addCharacteristic(VolumeCharacteristic)
     .on('get', this.getVolume.bind(this))
     .on('set', this.setVolume.bind(this));
+
+  this.service
+    .addCharacteristic(ChannelCharacteristic)
+    .on('get', this.getChannel.bind(this))
+    .on('set', this.setChannel.bind(this));
 
   // Init the panasonic controller
   this.tv = new PanasonicViera(this.HOST);
@@ -73,11 +79,11 @@ PanasonicTV.prototype.setOn = function(on, callback) {
       self.setOnCallback(new Error("The TV is *really* off and cannot be woken up."));
     }
     else if (state == 1 && !on) {
-     self.tv.send(PanasonicViera.POWER_TOGGLE); 
+     self.tv.send(PanasonicViera.POWER_TOGGLE);
       self.setOnCallback(null, false);
     }
     else {
-     self.setOnCallback(new Error("Cannot fullfill " + (on ? "ON" : "OFF") + " request. Powerstate == " + state)); 
+     self.setOnCallback(new Error("Cannot fullfill " + (on ? "ON" : "OFF") + " request. Powerstate == " + state));
     }
   })
 }
@@ -108,16 +114,25 @@ PanasonicTV.prototype.getVolume = function(callback) {
 }
 
 PanasonicTV.prototype.setVolume = function(volume, callback) {
-  // Here we don't care about the TV's powerstate. If it's off, then all calls time out or error.. 
+  // Here we don't care about the TV's powerstate. If it's off, then all calls time out or error..
   var translatedVolume = (volume / 100) * this.maxVolume;
   this.tv.setVolume(translatedVolume);
+  callback();
+}
+
+PanasonicTV.prototype.getChannel = function(callback) {
+  callback(null, 0);
+}
+
+PanasonicTV.prototype.setChannel = function(channel, callback) {
+  this.tv.send("D" + channel);
   callback();
 }
 
 // Returns:
 // -1 when the TV is in standby-mode (a 400-Bad Request is returned by the TV)
 //  0 when the TV is off, or it's a TV that does not support the standby wake-up request(the request errors)
-//  1 when the TV is on (a normal 200 response is returned) 
+//  1 when the TV is on (a normal 200 response is returned)
 PanasonicTV.prototype.getPowerState = function(ipAddress, stateCallback) {
 
   var path = "/dmr/control_0";
@@ -168,7 +183,7 @@ PanasonicTV.prototype.getPowerState = function(ipAddress, stateCallback) {
       }
     });
   });
- 
+
  req.on('error', function(e) {
     console.log('errored');
     console.log(e);
@@ -211,6 +226,24 @@ function makeVolumeCharacteristic() {
     });
     this.value = this.getDefaultValue();
   };
-  
+
   inherits(VolumeCharacteristic, Characteristic);
+}
+
+function makeChannelCharacteristic() {
+
+  ChannelCharacteristic = function () {
+    Characteristic.call(this, 'Channel', '212131F4-2E14-4FF4-AE13-C97C3232499D');
+    this.setProps({
+      format: Characteristic.Formats.INT,
+      unit: Characteristic.Units.NONE,
+      maxValue: 100,
+      minValue: 0,
+      minStep: 1,
+      perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
+    });
+    this.value = this.getDefaultValue();
+  };
+
+  inherits(ChannelCharacteristic, Characteristic);
 }
