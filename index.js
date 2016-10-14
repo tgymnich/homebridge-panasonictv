@@ -48,28 +48,20 @@ PanasonicTV.prototype.getServices = function() {
 
 PanasonicTV.prototype.getOn = function(callback) {
 
-  console.log("==========================");
-  console.log("getOn");
-
   var self = this;
   self.getOnCallback = callback;
 
   this.getPowerState(this.HOST, function(state) {
-    console.log("getOn :: Got powerstate: " + state);
     self.getOnCallback(null,state == 1);
   });
 }
 
 PanasonicTV.prototype.setOn = function(on, callback) {
 
-  console.log("==========================");
-  console.log("setOn: " + on);
-
   var self = this;
   self.setOnCallback = callback;
 
   this.getPowerState(this.HOST, function(state) {
-    console.log("setOn :: Got powerstate: " + state);
 
     if (state == -1 && on) {
       self.tv.send(PanasonicViera.POWER_TOGGLE);
@@ -90,20 +82,14 @@ PanasonicTV.prototype.setOn = function(on, callback) {
 
 PanasonicTV.prototype.getVolume = function(callback) {
 
-  console.log("==========================");
-  console.log("getVolume");
-
   var self = this;
   self.volumeCallback = callback;
 
   this.getPowerState(this.HOST, function(state) {
-    console.log("getVolume :: Got powerstate: " + state);
 
       if (state == 1) {
         self.tv.getVolume(function (data) {
-          console.log("volume: " + data);
           var translatedVolume = (data / self.maxVolume) * 100;
-          console.log("translatedVolume: " + translatedVolume);
           self.volumeCallback(null, translatedVolume);
         });
       }
@@ -169,8 +155,6 @@ PanasonicTV.prototype.getPowerState = function(ipAddress, stateCallback) {
       // do nothing here, but without attaching a 'data' event, the 'end' event is not called
     });
     res.on('end', function() {
-      console.log("request ended");
-      console.log(res.statusCode);
       if(res.statusCode == 200) {
         if (!calledBack) {
           stateCallback(1);
