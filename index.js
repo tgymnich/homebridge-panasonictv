@@ -1,5 +1,5 @@
 var inherits = require('util').inherits;
-var PanasonicViera = require('./node_modules/panasonic-viera-control/panasonicviera.js');
+var PanasonicViera = require('panasonic-viera-control/panasonicviera.js');
 var http = require('http');
 var Service, Characteristic, VolumeCharacteristic, ChannelCharacteristic;
 
