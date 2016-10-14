@@ -15,7 +15,8 @@
             "accessory": "TV",
             "name": "TV",
             "description": "Livingroom tv",
-            "ip": "192.168.178.20"
+            "ip": "192.168.178.20",
+            "maxVolume": 15
         }
     ]
 }
