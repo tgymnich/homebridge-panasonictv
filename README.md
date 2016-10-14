@@ -1,24 +1,27 @@
 # homebridge-panasonictv
 
-A homebridge Plugin for turning on and off your Panasonic TV
+A homebridge plugin for turning on and off your Panasonic Viera TV. 
+
+The plugin also has experimental support for changing the volume and channel. These characteristics are not really supported by HomeKit, but some HomeKit apps do provide you with the abillity to use them.
+
+Apple's own 'Home' App, only support on/off. 
 
 # Installation
 
-1. Install homebridge using: npm install -g homebridge
-2. Install this plugin using: npm install -g homebridge-panasonictv
+1. Install homebridge using: `npm install -g homebridge`
+2. Install this plugin using: `npm install -g homebridge-panasonictv`
 3. Update your configuration file. See sample-config.json in this repository for a sample. 
 
 # Compatible TVs:
 
-In my experience not every TV can be turned on, when it is off
+Not all Viara TV's can be turned *on* when their current state is *off*. This depends on the model. All models should be able to be turned *off*, though.
 
-The following models are confirmed to work:
+The following models have been reported to be working with this plugin:
 
-1. TX-50CX700B
-
-If your TV does not support turning it on over this plugin you might want to consider using this pluign:
-https://github.com/fguchelaar/homebridge-panasonictv
-
+| Model | Supports ON when OFF |
+| --- | --- |
+| TX-50CX700B | :white_check_mark: |
+| TX-P50VT50 | :x: |
 
 # Configuration
 
