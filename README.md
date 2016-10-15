@@ -14,7 +14,7 @@ Apple's own 'Home' App, only support on/off.
 
 # Compatible TVs:
 
-Not all Viara TV's can be turned *on* when their current state is *off*. This depends on the model. All models should be able to be turned *off*, though.
+Not all Viara TV's can be turned *on* when their current state is *off* (or bettter: *standby*). This depends on the model. All models should be able to be turned *off*, though.
 
 The following models have been reported to be working with this plugin:
 
