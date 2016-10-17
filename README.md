@@ -20,6 +20,7 @@ The following models have been reported to be working with this plugin:
 
 | Model | Supports ON when OFF |
 | --- | --- |
+| TX-40CX680B | :white_check_mark: |
 | TX-48AX630E | :white_check_mark: |
 | TX-50CX700B | :white_check_mark: |
 | TX-P50VT50 | :x: |
@@ -40,4 +41,3 @@ Configuration sample:
 
     ]
 ```
-
