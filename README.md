@@ -1,4 +1,4 @@
-# homebridge-panasonictv https://badge.fury.io/js/homebridge-panasonictv.svg
+# homebridge-panasonictv [![npm version](https://badge.fury.io/js/homebridge-panasonictv.svg)](https://badge.fury.io/js/homebridge-panasonictv)
 
 A homebridge plugin for turning on and off your Panasonic Viera TV. 
 
