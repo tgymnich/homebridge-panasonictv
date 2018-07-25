@@ -136,6 +136,7 @@ PanasonicTV.prototype.getPowerState = function(ipAddress, stateCallback) {
     port: '55000',
     path: path,
     method: 'POST',
+    timeout: 2000,
     headers: {
       'Content-Length': body.length,
       'Content-Type': 'text/xml; charset="utf-8"',
@@ -189,8 +190,6 @@ PanasonicTV.prototype.getPowerState = function(ipAddress, stateCallback) {
       console.log ("already called callback");
     }
   });
-
-  req.setTimeout(2000);
 
   req.write(body);
   req.end();
