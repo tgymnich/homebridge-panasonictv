@@ -25,6 +25,7 @@ The following models have been reported to be working with this plugin:
 | TX-50CX700B | :white_check_mark: |
 | TX-P50VT50 | :x: |
 | TX-58DX750 | :white_check_mark: | 
+| TX-55EX633E | :x: | 
 
 # Configuration
 
